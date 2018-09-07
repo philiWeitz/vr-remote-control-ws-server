@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./build/server.js",
     "build": "tsc",
     "watch-ts": "tsc -w",
     "watch-js": "nodemon --inspect=0.0.0.0:65505 ./build/server.js --delay 1000ms",
