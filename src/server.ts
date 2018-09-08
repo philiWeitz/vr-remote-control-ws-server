@@ -52,8 +52,8 @@ function eulerAngleToPWMValue(eulerAngle: number) {
     value = Math.min(180, 90 + Math.abs(eulerAngle - 360));
   }
 
-  // map to 0 - 1024
-  return Math.round((1024 * value) / 180);
+  // map to 0 - 1800 + 500 offset
+  return Math.round((1800 * value) / 180) + 500;
 }
 
 
