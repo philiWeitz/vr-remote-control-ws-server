@@ -1,5 +1,7 @@
 import { client as WebSocketClient } from 'websocket';
 import config from './config';
+import { setPWM } from './raspberry';
+import { HeadPosition } from './model/head-position';
 
 const client = new WebSocketClient();
 
@@ -23,8 +25,11 @@ client.on('connect', function(connection) {
   });
 
   connection.on('message', function(message) {
-    if (message.type === 'utf8') {
-      console.log("Received: '" + message.utf8Data + "'");
+    if (message.type === 'utf8' && message.utf8Data) {
+      try {
+        const value = <HeadPosition> JSON.parse(message.utf8Data);
+        setPWM(value.horizontal);
+      } catch(e) {}
     }
   });
 
