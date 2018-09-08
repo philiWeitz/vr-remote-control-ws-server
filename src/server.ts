@@ -27,6 +27,7 @@ wsServer.on('connection', (ws: WebSocket) => {
         const rotationVector = JSON.parse(message);
 
         const value: HeadPosition = {
+          vertical: eulerAngleToPWMValue(rotationVector.x),
           horizontal: eulerAngleToPWMValue(rotationVector.y),
         };
 

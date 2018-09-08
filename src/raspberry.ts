@@ -1,6 +1,8 @@
+import { GPIO } from './enum/GpioPin';
 
-export function setPWM(pulseWidth: number) {
-  console.log(pulseWidth);
+
+export function setPWM(pulseWidth: number, gpioPin: GPIO) {
+  console.log(`${pulseWidth} on ${gpioPin.toString()}`);
 }
 
 
@@ -13,10 +15,16 @@ export function setPWM(pulseWidth: number) {
 /*
 const Gpio = require('pigpio').Gpio;
 
-const motor = new Gpio(18, {mode: Gpio.OUTPUT});
+const pinMap = {
+  [GPIO.VERTICAL]: new Gpio(GPIO.VERTICAL, {mode: Gpio.OUTPUT}),
+  [GPIO.HORIZONTAL]: new Gpio(GPIO.HORIZONTAL, {mode: Gpio.OUTPUT}),
+};
 
 
-export function setPWM(pulseWidth: number) {
-  motor.servoWrite(pulseWidth);
+export function setPWM(pulseWidth: number, gpioPin: GPIO) {
+  const pin = pinMap[gpioPin];
+  if (pin) {
+    pin.servoWrite(pulseWidth);
+  }
 }
 */
