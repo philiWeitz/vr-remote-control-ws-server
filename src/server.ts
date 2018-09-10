@@ -2,7 +2,6 @@ import * as express from 'express';
 import * as http from 'http';
 import * as WebSocket from 'ws';
 import config from './config';
-import { HeadPosition } from './model/head-position';
 
 const app = express();
 
@@ -24,14 +23,7 @@ wsServer.on('connection', (ws: WebSocket) => {
 
     try {
       subscriptions.forEach((subscriber) => {
-        const rotationVector = JSON.parse(message);
-
-        const value: HeadPosition = {
-          vertical: eulerAngleToPWMValue(rotationVector.x),
-          horizontal: eulerAngleToPWMValue(rotationVector.y),
-        };
-
-        subscriber.send(JSON.stringify(value));
+        subscriber.send(JSON.stringify(message));
       });
     } catch(e) {
       subscriptions = subscriptions.filter(
@@ -41,21 +33,6 @@ wsServer.on('connection', (ws: WebSocket) => {
 
   console.debug('Client connected');
 });
-
-
-function eulerAngleToPWMValue(eulerAngle: number) {
-  let value = 0;
-
-  // map to 0 - 180 degree
-  if (eulerAngle < 180) {
-    value = Math.max(0, 90 - eulerAngle);
-  } else {
-    value = Math.min(180, 90 + Math.abs(eulerAngle - 360));
-  }
-
-  // map to 0 - 1800 + 500 offset
-  return Math.round((1800 * value) / 180) + 500;
-}
 
 
 //start the server
