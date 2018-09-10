@@ -23,7 +23,7 @@ wsServer.on('connection', (ws: WebSocket) => {
 
     try {
       subscriptions.forEach((subscriber) => {
-        subscriber.send(JSON.stringify(message));
+        subscriber.send(message.toString());
       });
     } catch(e) {
       subscriptions = subscriptions.filter(
